@@ -51,6 +51,18 @@
       }
 
       switch (di.source_type?.value) {
+        case 5:
+          // direct
+          if (
+            di.manufacturer?.value === 1 /* Garmin */ &&
+            (
+              di.product?.value === 3192 || /* Speed Sensor*/
+              di.product?.value === 3307 /* Cannondale Wheel Sensor*/
+            )
+          ) {
+            devices[serial].type = 'BikeSpeedSensor' || `D ${di.manufacturer?.value}-${di.product?.value}`
+          }
+          break;
         case 3:
           // bluetooth
           devices[serial].type = BLEDeviceTypes[di.device_type?.value] || `BLE ${di.device_type?.value}`
